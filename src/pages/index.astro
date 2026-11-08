@@ -110,7 +110,7 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
           <article class="project">
             <figure class="frame frame-wide">
               {image && <img src={image} alt={project.data.title} onerror="this.remove()" />}
-              <figcaption class="ph-label">Project image · 16:10</figcaption>
+              <figcaption class="ph-label">Project image</figcaption>
             </figure>
             <div class="project-body">
               <p class="mono project-num">{String(index + 1).padStart(2, '0')}</p>

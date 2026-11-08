@@ -137,7 +137,11 @@ src/                     Site code
 public/
 ├─ admin/                Decap CMS (index.html + config.yml)
 ├─ uploads/              Images + résumé
-└─ favicon.svg
+├─ favicon.ico           Browser icon (16/32/48)
+├─ favicon-16.png
+├─ favicon-32.png
+├─ apple-touch-icon.png
+└─ favicon.svg           Source mark
 
 deploy/                  Caddy + Docker Compose for the server
 ```
