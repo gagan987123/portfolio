@@ -1,0 +1,35 @@
+---
+import Layout from '../../Layout.astro';
+import { getPosts, getProfile, formatDate, renderMarkdown, mediaUrl } from '../../lib/content.js';
+
+export function getStaticPaths() {
+  return getPosts().map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const profile = getProfile();
+const html = renderMarkdown(post.body);
+const cover = mediaUrl(post.data.cover);
+---
+
+<Layout title={`${post.data.title} — ${profile.name}`} description={post.data.excerpt}>
+  <article class="article">
+    <header class="article-head">
+      <p class="mono sec-label">Writing</p>
+      <h1>{post.data.title}</h1>
+      <div class="post-meta mono">
+        <span>{profile.name}</span>
+        <span>{formatDate(post.data.date)}</span>
+      </div>
+    </header>
+
+    {cover && <img src={cover} alt={post.data.title} style="margin-bottom:2rem;border:1px solid var(--line)" />}
+
+    <div class="prose" set:html={html} />
+
+    <a class="mono link-inline back-link" href="/blog">← All posts</a>
+  </article>
+</Layout>

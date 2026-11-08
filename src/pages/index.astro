@@ -1,0 +1,225 @@
+---
+import Layout from '../Layout.astro';
+import { getProfile, getProjects, getPosts, mediaUrl, formatMonth } from '../lib/content.js';
+
+const profile = getProfile();
+const formKey =
+  import.meta.env.WEB3FORMS_KEY || process.env.WEB3FORMS_KEY || profile.contact.form_access_key;
+const thanksUrl = import.meta.env.DEV ? '' : `${profile.site_url}/thanks`;
+const projects = getProjects();
+const posts = getPosts().slice(0, 3);
+const s = profile.sections;
+const portrait = mediaUrl(profile.portrait);
+const aboutPhoto = mediaUrl(profile.about.photo);
+const resumeUrl = mediaUrl(profile.resume);
+const email = profile.contact.email;
+const socials = (profile.contact.socials || []).filter((item) => item.url);
+---
+
+<Layout>
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div class="hero-copy reveal">
+        <p class="mono status"><span class="dot"></span> {profile.status}</p>
+        <h1>{profile.headline_1}<br /><em>{profile.headline_2}</em></h1>
+        <p class="lede">{profile.lede}</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href={profile.primary_cta_href}>
+            {profile.primary_cta_label} <span aria-hidden="true">→</span>
+          </a>
+          {resumeUrl && (
+            <a class="btn btn-ghost" href={resumeUrl} download>
+              {profile.resume_cta_label} <span aria-hidden="true">↓</span>
+            </a>
+          )}
+        </div>
+        <dl class="stats">
+          {profile.stats.map((stat) => (
+            <div>
+              <dt class="mono">{stat.label}</dt>
+              <dd>{stat.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      <div class="portrait reveal">
+        <figure class="frame frame-tall">
+          {portrait && <img src={portrait} alt={`Portrait of ${profile.name}`} onerror="this.remove()" />}
+          <figcaption class="ph-label">Your portrait · 4:5</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip">
+    <div class="wrap strip-list mono">
+      {profile.strip.map((item) => <span>{item}</span>)}
+    </div>
+  </div>
+
+  <section class="section wrap" id="experience">
+    <div class="sec-head">
+      <div>
+        <p class="mono sec-label">{s.experience_label}</p>
+        <h2 class="sec-title">{s.experience_title}</h2>
+      </div>
+      {resumeUrl && <a class="mono link-inline" href={resumeUrl} download>Full résumé ↓</a>}
+    </div>
+
+    <div class="exp-list">
+      {profile.experience.map((exp) => (
+        <article class="exp-item">
+          <div class="exp-meta">
+            <span class="mono exp-date">{exp.dates}</span>
+            <span class="exp-company">{exp.company}</span>
+            <span class="mono exp-loc">{exp.location}</span>
+          </div>
+          <div class="exp-body">
+            <h3>{exp.role}</h3>
+            <ul class="exp-points">
+              {exp.bullets.map((bullet) => <li>{bullet}</li>)}
+            </ul>
+            <ul class="tags mono">
+              {exp.tags.map((tag) => <li>{tag}</li>)}
+            </ul>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section wrap" id="work">
+    <div class="sec-head">
+      <div>
+        <p class="mono sec-label">{s.work_label}</p>
+        <h2 class="sec-title">{s.work_title}</h2>
+      </div>
+      {profile.github_url && (
+        <a class="mono link-inline" href={profile.github_url} target="_blank" rel="noopener">GitHub ↗</a>
+      )}
+    </div>
+
+    <div class="work-grid">
+      {projects.map((project, index) => {
+        const image = mediaUrl(project.data.image);
+        return (
+          <article class="project">
+            <figure class="frame frame-wide">
+              {image && <img src={image} alt={project.data.title} onerror="this.remove()" />}
+              <figcaption class="ph-label">Project image · 16:10</figcaption>
+            </figure>
+            <div class="project-body">
+              <p class="mono project-num">{String(index + 1).padStart(2, '0')}</p>
+              <h3>{project.data.title}</h3>
+              <p>{project.data.description}</p>
+              <ul class="tags mono">
+                {(project.data.tags || []).map((tag) => <li>{tag}</li>)}
+              </ul>
+              {project.data.link && (
+                <a class="mono project-link" href={project.data.link} target="_blank" rel="noopener">
+                  View project →
+                </a>
+              )}
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="section wrap" id="writing">
+    <div class="sec-head">
+      <div>
+        <p class="mono sec-label">{s.writing_label}</p>
+        <h2 class="sec-title">{s.writing_title}</h2>
+      </div>
+      <a class="mono link-inline" href="/blog">All posts ↗</a>
+    </div>
+
+    <div class="write-list">
+      {posts.map((post) => (
+        <a class="write-item" href={`/blog/${post.slug}`}>
+          <span class="mono write-date">{formatMonth(post.data.date)}</span>
+          <h3>{post.data.title}</h3>
+          <span class="write-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="section wrap" id="about">
+    <div class="about-grid">
+      <div class="reveal">
+        <figure class="frame frame-tall">
+          {aboutPhoto && <img src={aboutPhoto} alt={profile.name} onerror="this.remove()" />}
+          <figcaption class="ph-label">Photo · 4:5</figcaption>
+        </figure>
+      </div>
+      <div>
+        <p class="mono sec-label">{s.about_label}</p>
+        <h2 class="sec-title about-title">{profile.about.statement}</h2>
+        <p>{profile.about.p1}</p>
+        <p>{profile.about.p2}</p>
+
+        <div class="skill-groups">
+          {profile.skills.map((group) => (
+            <div class="skill-group">
+              <h3 class="mono">{group.group}</h3>
+              <ul>
+                {group.items.map((item) => <li>{item}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <p class="mono sec-label">{s.contact_label}</p>
+        <h2 class="contact-title">
+          {profile.contact.title_1} <em>{profile.contact.title_2}</em>
+        </h2>
+        <p class="contact-lede">{profile.contact.lede}</p>
+
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value={formKey} />
+          <input type="hidden" name="subject" value={`New message from ${profile.name}'s portfolio`} />
+          <input type="hidden" name="from_name" value="Portfolio contact form" />
+          {thanksUrl && <input type="hidden" name="redirect" value={thanksUrl} />}
+          <input type="checkbox" name="botcheck" style="display:none" />
+          <label class="field">
+            <span class="mono">Name</span>
+            <input type="text" name="name" placeholder="Ada Lovelace" required />
+          </label>
+          <label class="field">
+            <span class="mono">Email</span>
+            <input type="email" name="email" placeholder="you@company.com" required />
+          </label>
+          <label class="field">
+            <span class="mono">Message</span>
+            <textarea name="message" rows="3" placeholder="Tell me what you're building…" required></textarea>
+          </label>
+          <button class="btn btn-primary" type="submit">
+            Send message <span aria-hidden="true">→</span>
+          </button>
+        </form>
+      </div>
+
+      <aside class="contact-aside">
+        <p class="mono aside-label">Prefer another way?</p>
+        <a class="aside-link" href={`mailto:${email}`}>
+          {email} <span aria-hidden="true">↗</span>
+        </a>
+        {socials.map((item) => (
+          <a class="aside-link" href={item.url} target="_blank" rel="noopener">
+            {item.label} <span aria-hidden="true">↗</span>
+          </a>
+        ))}
+      </aside>
+    </div>
+  </section>
+</Layout>

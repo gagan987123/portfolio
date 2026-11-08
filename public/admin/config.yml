@@ -1,0 +1,148 @@
+local_backend: true
+
+backend:
+  name: git-gateway
+  branch: main
+
+site_url: https://gagandeepsingh.is-a.dev
+display_url: https://gagandeepsingh.is-a.dev
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: profile
+    label: Profile
+    files:
+      - name: profile
+        label: Profile & site content
+        file: content/profile.json
+        fields:
+          - { name: name, label: Name, widget: string }
+          - { name: role, label: Role, widget: string }
+          - { name: status, label: Status line, widget: string }
+          - { name: headline_1, label: Headline line 1, widget: string }
+          - { name: headline_2, label: Headline line 2 (orange italic), widget: string }
+          - { name: lede, label: Intro paragraph, widget: text }
+          - { name: primary_cta_label, label: Primary button label, widget: string }
+          - { name: primary_cta_href, label: Primary button link, widget: string }
+          - { name: resume_cta_label, label: Résumé button label, widget: string }
+          - { name: resume, label: Résumé file (PDF), widget: file, required: false }
+          - label: Header stats
+            name: stats
+            widget: list
+            fields:
+              - { name: label, label: Label, widget: string }
+              - { name: value, label: Value, widget: string }
+          - label: Tech strip
+            name: strip
+            widget: list
+            field: { name: item, label: Technology, widget: string }
+          - { name: portrait, label: Portrait photo, widget: image, required: false }
+          - { name: github_url, label: GitHub URL, widget: string, required: false }
+          - label: Section labels
+            name: sections
+            widget: object
+            fields:
+              - { name: experience_label, label: Experience label, widget: string }
+              - { name: experience_title, label: Experience title, widget: string }
+              - { name: work_label, label: Work label, widget: string }
+              - { name: work_title, label: Work title, widget: string }
+              - { name: about_label, label: About label, widget: string }
+              - { name: writing_label, label: Writing label, widget: string }
+              - { name: writing_title, label: Writing title, widget: string }
+              - { name: contact_label, label: Contact label, widget: string }
+          - label: Experience
+            name: experience
+            widget: list
+            fields:
+              - { name: company, label: Company, widget: string }
+              - { name: role, label: Role, widget: string }
+              - { name: dates, label: Dates, widget: string }
+              - { name: location, label: Location, widget: string }
+              - label: Bullets
+                name: bullets
+                widget: list
+                field: { name: point, label: Point, widget: text }
+              - label: Tags
+                name: tags
+                widget: list
+                field: { name: tag, label: Tag, widget: string }
+          - label: About
+            name: about
+            widget: object
+            fields:
+              - { name: statement, label: Statement, widget: text }
+              - { name: p1, label: Paragraph 1, widget: text }
+              - { name: p2, label: Paragraph 2, widget: text }
+              - { name: photo, label: About photo, widget: image, required: false }
+          - label: Skills
+            name: skills
+            widget: list
+            fields:
+              - { name: group, label: Group, widget: string }
+              - label: Items
+                name: items
+                widget: list
+                field: { name: item, label: Item, widget: string }
+          - label: Contact
+            name: contact
+            widget: object
+            fields:
+              - { name: title_1, label: Title line 1, widget: string }
+              - { name: title_2, label: Title line 2 (orange italic), widget: string }
+              - { name: lede, label: Intro text, widget: text }
+              - { name: email, label: Email, widget: string }
+              - { name: form_access_key, label: Web3Forms access key, widget: string, required: false }
+              - label: Social links
+                name: socials
+                widget: list
+                fields:
+                  - { name: label, label: Label, widget: string }
+                  - { name: url, label: URL, widget: string }
+          - { name: footer_badge, label: Footer badge, widget: string }
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { name: title, label: Page title, widget: string }
+              - { name: description, label: Meta description, widget: text }
+              - { name: og_image, label: Share image, widget: image, required: false }
+          - { name: site_url, label: Site URL, widget: string }
+
+  - name: posts
+    label: Posts
+    label_singular: Post
+    folder: content/posts
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: date, label: Date, widget: datetime, date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { name: excerpt, label: Excerpt, widget: text }
+      - { name: cover, label: Cover image, widget: image, required: false }
+      - label: Tags
+        name: tags
+        widget: list
+        required: false
+        field: { name: tag, label: Tag, widget: string }
+      - { name: draft, label: Draft, widget: boolean, default: false }
+      - { name: body, label: Body, widget: markdown }
+
+  - name: projects
+    label: Projects
+    label_singular: Project
+    folder: content/projects
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { name: title, label: Title, widget: string }
+      - { name: description, label: Description, widget: text }
+      - label: Tags
+        name: tags
+        widget: list
+        field: { name: tag, label: Tag, widget: string }
+      - { name: link, label: Project link, widget: string, required: false }
+      - { name: image, label: Project image, widget: image, required: false }
+      - { name: order, label: Order, widget: number, default: 1, value_type: int }
+      - { name: body, label: Details (optional), widget: markdown, required: false }

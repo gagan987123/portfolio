@@ -1,0 +1,64 @@
+---
+import './styles.css';
+import { getProfile, mediaUrl } from './lib/content.js';
+
+const profile = getProfile();
+const resumeUrl = mediaUrl(profile.resume);
+const { title, description, ogImage } = Astro.props;
+const pageTitle = title || profile.seo.title;
+const pageDescription = description || profile.seo.description;
+const shareImage = ogImage || profile.seo.og_image;
+
+const nav = [
+  { label: 'Experience', href: '/#experience' },
+  { label: 'Work', href: '/#work' },
+  { label: 'Blog', href: '/blog' },
+  { label: 'About', href: '/#about' },
+  { label: 'Contact', href: '/#contact' },
+];
+---
+
+<!doctype html>
+<html lang="en" id="top">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="theme-color" content="#f3eee3" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:type" content="website" />
+    {shareImage && <meta property="og:image" content={mediaUrl(shareImage)} />}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <header class="nav">
+      <div class="wrap nav-inner">
+        <a class="brand" href="/">{profile.name}<span class="brand-dot">.</span></a>
+        <nav class="nav-links" aria-label="Primary">
+          {nav.map((item) => <a class="mono nav-text" href={item.href}>{item.label}</a>)}
+          {resumeUrl && <a class="btn btn-primary btn-sm" href={resumeUrl} download>Résumé</a>}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <p class="mono">© {new Date().getFullYear()} {profile.name}</p>
+        <p class="mono badge">{profile.footer_badge}</p>
+        <a class="mono link-inline" href="#top">Back to top ↑</a>
+      </div>
+    </footer>
+  </body>
+</html>
