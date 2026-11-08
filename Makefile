@@ -1,4 +1,11 @@
-.PHONY: help install dev cms edit open build preview stop clean
+ifneq (,$(wildcard .env))
+include .env
+export
+endif
+
+SSH_KEY ?= $(HOME)/.ssh/id_ed25519
+
+.PHONY: help install dev cms edit open build preview stop clean deploy
 
 help:
 	@echo "Portfolio — common commands"
@@ -9,6 +16,7 @@ help:
 	@echo "  make open      Open site + admin in browser"
 	@echo "  make build     Build static site into dist/"
 	@echo "  make preview   Preview the production build"
+	@echo "  make deploy    Build + rsync dist/ to your server (needs DEPLOY_*)"
 	@echo "  make stop      Stop the site and CMS proxy"
 	@echo "  make install   Install dependencies"
 	@echo "  make clean     Remove build output"
@@ -41,6 +49,13 @@ build:
 
 preview:
 	npm run preview
+
+deploy: build
+	@test -n "$(DEPLOY_HOST)" || (echo "Missing DEPLOY_HOST — add DEPLOY_HOST, DEPLOY_USER, DEPLOY_PATH to .env"; exit 1)
+	@test -n "$(DEPLOY_USER)" || (echo "Missing DEPLOY_USER in .env"; exit 1)
+	@test -n "$(DEPLOY_PATH)" || (echo "Missing DEPLOY_PATH in .env"; exit 1)
+	rsync -avz --delete -e "ssh -i $(SSH_KEY)" dist/ $(DEPLOY_USER)@$(DEPLOY_HOST):$(DEPLOY_PATH)
+	@echo "Deployed to $(DEPLOY_HOST):$(DEPLOY_PATH)"
 
 stop:
 	-@npx astro dev stop >/dev/null 2>&1 || true
