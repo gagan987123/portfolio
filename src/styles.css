@@ -16,6 +16,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 96px;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -94,6 +95,7 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 50;
+  background: var(--cream);
   background: color-mix(in srgb, var(--cream) 82%, transparent);
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
@@ -125,6 +127,30 @@ a { color: inherit; }
   transition: color 0.2s ease;
 }
 .nav-links .nav-text:hover { color: var(--ink); }
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  color: var(--ink);
+}
+.nav-toggle span {
+  display: block;
+  width: 17px;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 0.2s ease;
+}
+.nav.is-open .nav-toggle span:first-child { transform: translateY(3.25px) rotate(45deg); }
+.nav.is-open .nav-toggle span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
 
 .hero { padding: 92px 32px 76px; }
 .hero-grid {
@@ -492,12 +518,38 @@ h1 em {
   .wrap { padding: 0 20px; }
   .hero { padding: 56px 20px 52px; }
   .section { padding: 56px 20px; }
-  .nav-links { gap: 16px; }
-  .nav-text { display: none; }
   .sec-head { flex-direction: column; align-items: flex-start; gap: 10px; }
   .skill-groups { grid-template-columns: 1fr; gap: 28px; }
   .stats { gap: 26px; }
   .strip-list { justify-content: flex-start; }
+}
+
+@media (max-width: 820px) {
+  .nav-toggle { display: inline-flex; }
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 6px 20px 22px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 20px 34px rgba(17, 17, 17, 0.1);
+  }
+  .nav.is-open .nav-links { display: flex; }
+  .nav-links .nav-text {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .nav-links .btn {
+    margin-top: 18px;
+    justify-content: center;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -700,6 +752,8 @@ h1 em {
 @media (max-width: 620px) {
   .page-head { padding: 56px 20px 32px; }
   .article { padding: 56px 20px 80px; }
+  .featured,
+  .post-card { padding: 22px; }
   .write-item { grid-template-columns: 1fr auto; gap: 8px; }
   .write-item h3 { grid-column: 1 / -1; grid-row: 2; font-size: 1.2rem; }
 }
