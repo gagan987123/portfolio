@@ -27,6 +27,9 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
           <a class="btn btn-primary" href={profile.primary_cta_href}>
             {profile.primary_cta_label} <span aria-hidden="true">→</span>
           </a>
+          <a class="btn btn-ghost" href="/blog">
+            Blog <span aria-hidden="true">→</span>
+          </a>
           {resumeUrl && (
             <a class="btn btn-ghost" href={resumeUrl} download>
               {profile.resume_cta_label} <span aria-hidden="true">↓</span>

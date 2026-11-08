@@ -519,7 +519,8 @@ h1 em {
   .hero { padding: 56px 20px 52px; }
   .section { padding: 56px 20px; }
   .sec-head { flex-direction: column; align-items: flex-start; gap: 10px; }
-  .skill-groups { grid-template-columns: 1fr; gap: 28px; }
+  .skill-groups { grid-template-columns: 1fr 1fr; gap: 24px 18px; }
+  .skill-group li { font-size: 0.9rem; }
   .stats { gap: 26px; }
   .strip-list { justify-content: flex-start; }
 }
