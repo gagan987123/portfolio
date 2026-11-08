@@ -92,7 +92,7 @@
     "statement": "I care about systems that are simple to run, cheap to operate, and hard to break.",
     "p1": "I build backend services and the infrastructure around them — APIs, background jobs, databases, and deploys. I like the unglamorous parts: clear logs, health checks, sensible defaults, and automation that removes 2 a.m. pages.",
     "p2": "Outside of work I write about cloud cost, self-host side projects on Oracle's free tier, and tinker with containers.",
-    "photo": "/uploads/img_8196_jpg.jpg"
+    "photo": ""
   },
   "sections": {
     "experience_label": "01 — Experience",
@@ -123,7 +123,7 @@
     "REST APIs"
   ],
   "lede": "I'm Gagandeep — a backend engineer at Invenco by GVR, building event-driven services and the AWS infrastructure behind them. I care about latency, cost, and systems that don't wake anyone at 2 a.m.",
-  "portrait": "/uploads/img_8196_jpg.jpg",
+  "portrait": "/uploads/img_2738.jpg",
   "seo": {
     "title": "Gagandeep Singh — Backend & Cloud Engineer",
     "description": "Backend and cloud engineer building reliable APIs, event-driven services, and automated AWS infrastructure.",
