@@ -18,9 +18,34 @@ const aboutPhoto = mediaUrl(profile.about.photo);
 const resumeUrl = mediaUrl(profile.resume);
 const email = profile.contact.email;
 const socials = (profile.contact.socials || []).filter((item) => item.url);
+const siteUrl = (profile.site_url || '').replace(/\/+$/, '');
+const personId = `${siteUrl}/#person`;
+const person = {
+  '@type': 'Person',
+  '@id': personId,
+  name: profile.name,
+  url: `${siteUrl}/`,
+  jobTitle: profile.role,
+  description: profile.seo.description,
+  email: `mailto:${email}`,
+  ...(portrait && { image: new URL(portrait, siteUrl).href }),
+  worksFor: { '@type': 'Organization', name: 'Invenco by GVR' },
+  address: { '@type': 'PostalAddress', addressLocality: 'Bangalore', addressCountry: 'IN' },
+  sameAs: socials.map((item) => item.url),
+  knowsAbout: profile.skills.flatMap((group) => group.items),
+};
+const website = {
+  '@type': 'WebSite',
+  '@id': `${siteUrl}/#website`,
+  url: `${siteUrl}/`,
+  name: `${profile.name} — ${profile.role}`,
+  description: profile.seo.description,
+  inLanguage: 'en',
+  publisher: { '@id': personId },
+};
 ---
 
-<Layout>
+<Layout jsonLd={[person, website]}>
   <section class="hero wrap">
     <div class="hero-grid">
       <div class="hero-copy reveal">
@@ -62,7 +87,7 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
 
       <div class="portrait reveal">
         <figure class="frame frame-tall">
-          {portrait && <img src={portrait} alt={`Portrait of ${profile.name}`} onerror="this.remove()" />}
+          {portrait && <img src={portrait} alt={`Portrait of ${profile.name}`} fetchpriority="high" decoding="async" onerror="this.remove()" />}
           <figcaption class="ph-label">Your portrait · 4:5</figcaption>
         </figure>
       </div>
@@ -131,7 +156,7 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
                   <span class="cover-title">{project.data.cover_text || project.data.title}</span>
                 </figcaption>
               ) : (
-                <img src={image} alt={project.data.title} onerror="this.remove()" />
+                <img src={image} alt={project.data.title} loading="lazy" decoding="async" onerror="this.remove()" />
               )}
             </figure>
             <div class="project-body">
@@ -187,7 +212,7 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
     <div class="about-grid">
       <div class="portrait reveal">
         <figure class="frame frame-tall">
-          {aboutPhoto && <img src={aboutPhoto} alt={profile.name} onerror="this.remove()" />}
+          {aboutPhoto && <img src={aboutPhoto} alt={profile.name} loading="lazy" decoding="async" onerror="this.remove()" />}
           <figcaption class="ph-label">Photo · 4:5</figcaption>
         </figure>
       </div>

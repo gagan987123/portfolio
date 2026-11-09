@@ -5,9 +5,38 @@ import { getProfile, getPosts, formatDate } from '../../lib/content.js';
 const profile = getProfile();
 const posts = getPosts();
 const [featured, ...rest] = posts;
+const siteUrl = (profile.site_url || '').replace(/\/+$/, '');
+const description = 'Notes on backends, infrastructure, and running things in the cloud.';
+const blog = {
+  '@type': 'Blog',
+  '@id': `${siteUrl}/blog#blog`,
+  name: `Writing — ${profile.name}`,
+  url: `${siteUrl}/blog`,
+  description,
+  inLanguage: 'en',
+  publisher: {
+    '@type': 'Person',
+    '@id': `${siteUrl}/#person`,
+    name: profile.name,
+    url: `${siteUrl}/`,
+  },
+  blogPost: posts.map((post) => ({
+    '@type': 'BlogPosting',
+    '@id': `${siteUrl}/blog/${post.slug}#article`,
+    headline: post.data.title,
+    description: post.data.excerpt,
+    url: `${siteUrl}/blog/${post.slug}`,
+    datePublished: new Date(post.data.date).toISOString(),
+    author: { '@id': `${siteUrl}/#person` },
+  })),
+};
 ---
 
-<Layout title={`Writing — ${profile.name}`} description="Notes on backends, infrastructure, and running things in the cloud.">
+<Layout
+  title={`Writing — ${profile.name}`}
+  description={description}
+  jsonLd={[blog]}
+>
   <header class="page-head wrap">
     <p class="mono sec-label">Writing</p>
     <h1>Notes on building<br /><em style="color:var(--orange);font-style:italic">and running</em> things.</h1>

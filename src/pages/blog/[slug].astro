@@ -13,20 +13,69 @@ const { post } = Astro.props;
 const profile = getProfile();
 const html = renderMarkdown(post.body);
 const cover = mediaUrl(post.data.cover);
+const siteUrl = (profile.site_url || '').replace(/\/+$/, '');
+const toIso = (value) => {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? undefined : date.toISOString();
+};
+const publishedIso = toIso(post.data.date);
+const modifiedIso = toIso(post.data.updated || post.data.date);
+const postUrl = `${siteUrl}/blog/${post.slug}`;
+const coverUrl = cover ? new URL(cover, siteUrl).href : undefined;
+const author = {
+  '@type': 'Person',
+  '@id': `${siteUrl}/#person`,
+  name: profile.name,
+  url: `${siteUrl}/`,
+};
+const blogPosting = {
+  '@type': 'BlogPosting',
+  '@id': `${postUrl}#article`,
+  headline: post.data.title,
+  description: post.data.excerpt,
+  datePublished: publishedIso,
+  dateModified: modifiedIso,
+  author,
+  publisher: author,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+  url: postUrl,
+  ...(coverUrl && { image: coverUrl }),
+  ...(post.data.tags?.length && { keywords: post.data.tags.join(', ') }),
+  articleSection: 'Writing',
+  inLanguage: 'en',
+};
+const breadcrumbs = {
+  '@type': 'BreadcrumbList',
+  '@id': `${postUrl}#breadcrumb`,
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+    { '@type': 'ListItem', position: 2, name: 'Writing', item: `${siteUrl}/blog` },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: postUrl },
+  ],
+};
 ---
 
-<Layout title={`${post.data.title} — ${profile.name}`} description={post.data.excerpt}>
+<Layout
+  title={`${post.data.title} — ${profile.name}`}
+  description={post.data.excerpt}
+  type="article"
+  ogImage={post.data.cover}
+  ogImageAlt={post.data.title}
+  publishedTime={publishedIso}
+  modifiedTime={modifiedIso}
+  jsonLd={[blogPosting, breadcrumbs]}
+>
   <article class="article">
     <header class="article-head">
       <p class="mono sec-label">Writing</p>
       <h1>{post.data.title}</h1>
       <div class="post-meta mono">
         <span>{profile.name}</span>
-        <span>{formatDate(post.data.date)}</span>
+        <time datetime={publishedIso}>{formatDate(post.data.date)}</time>
       </div>
     </header>
 
-    {cover && <img src={cover} alt={post.data.title} style="margin-bottom:2rem;border:1px solid var(--line)" />}
+    {cover && <img src={cover} alt={post.data.title} decoding="async" style="margin-bottom:2rem;border:1px solid var(--line)" />}
 
     <div class="prose" set:html={html} />
 
