@@ -11,16 +11,48 @@ media_folder: "public/uploads"
 public_folder: "/uploads"
 
 collections:
-  - name: profile
-    label: Profile
+  - name: site
+    label: Site content
     files:
-      - name: profile
-        label: Profile & site content
-        file: content/profile.json
+      - name: meta
+        label: Site & section labels
+        file: content/site/meta.json
         fields:
           - { name: name, label: Name, widget: string }
           - { name: role, label: Role, widget: string }
-          - { name: status, label: Status line, widget: string }
+          - label: Status line
+            name: status
+            widget: list
+            hint: "First segment is the headline; phone and email follow as separate segments."
+            field: { name: item, label: Segment, widget: string }
+          - { name: site_url, label: Site URL, widget: string }
+          - { name: footer_badge, label: Footer badge, widget: string }
+          - label: SEO
+            name: seo
+            widget: object
+            fields:
+              - { name: title, label: Page title, widget: string }
+              - { name: description, label: Meta description, widget: text }
+              - { name: og_image, label: Share image, widget: image, required: false }
+          - label: Section labels
+            name: sections
+            widget: object
+            fields:
+              - { name: experience_label, label: Experience label, widget: string }
+              - { name: experience_title, label: Experience title, widget: string }
+              - { name: work_label, label: Work label, widget: string }
+              - { name: work_title, label: Work title, widget: string }
+              - { name: certifications_label, label: Certifications label, widget: string }
+              - { name: certifications_title, label: Certifications title, widget: string }
+              - { name: about_label, label: About label, widget: string }
+              - { name: writing_label, label: Writing label, widget: string }
+              - { name: writing_title, label: Writing title, widget: string }
+              - { name: contact_label, label: Contact label, widget: string }
+
+      - name: hero
+        label: Hero
+        file: content/site/hero.json
+        fields:
           - { name: headline_1, label: Headline line 1, widget: string }
           - { name: headline_2, label: Headline line 2 (orange italic), widget: string }
           - { name: lede, label: Intro paragraph, widget: text }
@@ -28,6 +60,8 @@ collections:
           - { name: primary_cta_href, label: Primary button link, widget: string }
           - { name: resume_cta_label, label: Résumé button label, widget: string }
           - { name: resume, label: Résumé file (PDF), widget: file, required: false }
+          - { name: portrait, label: Portrait photo, widget: image, required: false }
+          - { name: github_url, label: GitHub URL, widget: string, required: false }
           - label: Header stats
             name: stats
             widget: list
@@ -38,21 +72,12 @@ collections:
             name: strip
             widget: list
             field: { name: item, label: Technology, widget: string }
-          - { name: portrait, label: Portrait photo, widget: image, required: false }
-          - { name: github_url, label: GitHub URL, widget: string, required: false }
-          - label: Section labels
-            name: sections
-            widget: object
-            fields:
-              - { name: experience_label, label: Experience label, widget: string }
-              - { name: experience_title, label: Experience title, widget: string }
-              - { name: work_label, label: Work label, widget: string }
-              - { name: work_title, label: Work title, widget: string }
-              - { name: about_label, label: About label, widget: string }
-              - { name: writing_label, label: Writing label, widget: string }
-              - { name: writing_title, label: Writing title, widget: string }
-              - { name: contact_label, label: Contact label, widget: string }
-          - label: Experience
+
+      - name: experience
+        label: Experience
+        file: content/site/experience.json
+        fields:
+          - label: Roles
             name: experience
             widget: list
             fields:
@@ -68,6 +93,11 @@ collections:
                 name: tags
                 widget: list
                 field: { name: tag, label: Tag, widget: string }
+
+      - name: about
+        label: About & skills
+        file: content/site/about.json
+        fields:
           - label: About
             name: about
             widget: object
@@ -85,6 +115,34 @@ collections:
                 name: items
                 widget: list
                 field: { name: item, label: Item, widget: string }
+
+      - name: certifications
+        label: Certifications & achievements
+        file: content/site/certifications.json
+        fields:
+          - label: Certifications section
+            name: certifications
+            widget: object
+            fields:
+              - { name: label, label: Section label, widget: string }
+              - { name: title, label: Section title, widget: string }
+              - { name: lede, label: Intro line, widget: text }
+              - label: Groups
+                name: groups
+                widget: list
+                fields:
+                  - { name: label, label: Group label, widget: string }
+                  - label: Items
+                    name: items
+                    widget: list
+                    fields:
+                      - { name: title, label: Title, widget: string }
+                      - { name: meta, label: Issuer / date / detail, widget: string }
+
+      - name: contact
+        label: Contact
+        file: content/site/contact.json
+        fields:
           - label: Contact
             name: contact
             widget: object
@@ -100,15 +158,6 @@ collections:
                 fields:
                   - { name: label, label: Label, widget: string }
                   - { name: url, label: URL, widget: string }
-          - { name: footer_badge, label: Footer badge, widget: string }
-          - label: SEO
-            name: seo
-            widget: object
-            fields:
-              - { name: title, label: Page title, widget: string }
-              - { name: description, label: Meta description, widget: text }
-              - { name: og_image, label: Share image, widget: image, required: false }
-          - { name: site_url, label: Site URL, widget: string }
 
   - name: posts
     label: Posts

@@ -32,7 +32,7 @@ cms:
 	npm run cms
 
 edit:
-	@npm run dev
+	@npm run dev -- --background
 	@nohup npm run cms > /tmp/portfolio-cms.log 2>&1 & echo $$! > /tmp/portfolio-cms.pid
 	@sleep 1
 	@echo "site:  http://localhost:4321"

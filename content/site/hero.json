@@ -1,0 +1,37 @@
+{
+  "headline_1": "Backends that scale.",
+  "headline_2": "Clouds that stay up.",
+  "lede": "I'm Gagandeep — a backend engineer at Invenco by GVR, building event-driven services and the AWS infrastructure behind them. I care about latency, cost, and systems that don't wake anyone at 2 a.m.",
+  "primary_cta_label": "View work",
+  "primary_cta_href": "#work",
+  "resume_cta_label": "Download résumé",
+  "resume": "Gagandeep_Singh_Resume.pdf",
+  "portrait": "/uploads/img_2738.jpg",
+  "github_url": "https://github.com/gagan987123",
+  "stats": [
+    {
+      "label": "Focus",
+      "value": "Backend & Platform"
+    },
+    {
+      "label": "Cloud",
+      "value": "AWS · OCI"
+    },
+    {
+      "label": "Base",
+      "value": "Bangalore, IN"
+    }
+  ],
+  "strip": [
+    "TypeScript",
+    "Golang",
+    "Node.js",
+    "PostgreSQL",
+    "MongoDB",
+    "Kafka",
+    "AWS",
+    "Docker",
+    "Microservices",
+    "REST APIs"
+  ]
+}

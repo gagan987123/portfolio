@@ -7,8 +7,18 @@ import sanitizeHtml from 'sanitize-html';
 const root = process.cwd();
 
 export function getProfile() {
-  const raw = fs.readFileSync(path.join(root, 'content', 'profile.json'), 'utf8');
-  return JSON.parse(raw);
+  const dir = path.join(root, 'content', 'site');
+  if (!fs.existsSync(dir)) {
+    const raw = fs.readFileSync(path.join(root, 'content', 'profile.json'), 'utf8');
+    return JSON.parse(raw);
+  }
+  return fs
+    .readdirSync(dir)
+    .filter((file) => file.endsWith('.json'))
+    .reduce((profile, file) => {
+      const raw = fs.readFileSync(path.join(dir, file), 'utf8');
+      return { ...profile, ...JSON.parse(raw) };
+    }, {});
 }
 
 function readCollection(dir) {

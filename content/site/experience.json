@@ -1,0 +1,43 @@
+{
+  "experience": [
+    {
+      "company": "Invenco by GVR",
+      "role": "Associate Software Engineer",
+      "dates": "Jun 2026 — Present",
+      "location": "Bangalore, IN",
+      "bullets": [
+        "Owned an end-to-end authorization caching solution — replaced a 100M+ record materialized view with an event-driven in-memory cache, cutting auth latency from 1–5s to <10ms p99.",
+        "Built 8 CDC event handlers on Kafka/ECS with parallel reads, pipelined writes, optimistic locking, a DLQ, and sub-60s lag observability; scaled to 100K QPS at ~$5.9K/yr vs a $28K/yr alternative.",
+        "Published an internal TypeScript authorization library with typed single-call APIs, pooling, and TLS retry — removing main-DB I/O load and standardizing auth across services.",
+        "Delivered 70% of a remote provisioning system for the service certificate hierarchy (infra, backend, deploy), automating mTLS issuance and zero-downtime rotation.",
+        "Implemented the CA hierarchy on AWS (ECS, Secrets Manager, RDS, SQS) with retries and CloudWatch alarms; cut manual provisioning effort by 80%."
+      ],
+      "tags": [
+        "TypeScript",
+        "Golang",
+        "AWS",
+        "Kafka",
+        "PostgreSQL",
+        "Docker"
+      ]
+    },
+    {
+      "company": "Invenco by GVR",
+      "role": "Software Development Intern",
+      "dates": "Jul 2025 — Jun 2026",
+      "location": "Bangalore, IN",
+      "bullets": [
+        "Increased team productivity by 40% by building custom AI integrations and IDE workflows that automated development, documentation, and GitHub/Confluence tasks.",
+        "Remediated pentest findings — stored XSS, CSV injection, user enumeration, access-control gaps, and auth rate-limiting — and patched cloud security issues via runtime upgrades.",
+        "Built backend REST APIs for an IoT core platform (asset, auth, device management) and contributed to a payment-bridging system with fault-tolerant error handling."
+      ],
+      "tags": [
+        "Node.js",
+        "Golang",
+        "REST APIs",
+        "AWS Lambda",
+        "PostgreSQL"
+      ]
+    }
+  ]
+}

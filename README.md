@@ -40,7 +40,7 @@ foreground. Press `Ctrl+C` to stop the CMS, then `make stop` to stop dev.
 ## Editing content
 
 1. `make edit`
-2. Open the admin, edit **Profile**, **Posts**, or **Projects**, and click **Save**.
+2. Open the admin, edit **Site content** (Hero, Experience, About, Certifications, Contact), **Posts**, or **Projects**, and click **Save**.
 3. Check the site at `localhost:4321`.
 4. `make deploy` to publish.
 
@@ -119,7 +119,7 @@ server IP.
 
 ```
 content/                 Editable content
-├─ profile.json          All page copy, experience, skills, links
+├─ site/*.json           Section-wise page copy (hero, experience, about, certifications, contact, meta)
 ├─ posts/*.md            Blog posts (Markdown + frontmatter)
 └─ projects/*.md         Project cards
 

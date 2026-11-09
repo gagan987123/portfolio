@@ -9,6 +9,10 @@ const thanksUrl = import.meta.env.DEV ? '' : `${profile.site_url}/thanks`;
 const projects = getProjects();
 const posts = getPosts().slice(0, 3);
 const s = profile.sections;
+const c = profile.certifications;
+const status = Array.isArray(profile.status) ? profile.status : [profile.status];
+const statusMain = status[0] || '';
+const statusContacts = status.slice(1).filter(Boolean);
 const portrait = mediaUrl(profile.portrait);
 const aboutPhoto = mediaUrl(profile.about.photo);
 const resumeUrl = mediaUrl(profile.resume);
@@ -20,7 +24,17 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
   <section class="hero wrap">
     <div class="hero-grid">
       <div class="hero-copy reveal">
-        <p class="mono status"><span class="dot"></span> {profile.status}</p>
+        <p class="mono status">
+          <span class="dot"></span>
+          <span class="status-text">
+            <span class="status-main">{statusMain}</span>
+            {statusContacts.length > 0 && (
+              <span class="status-contact">
+                {statusContacts.map((item) => <span class="status-item">{item}</span>)}
+              </span>
+            )}
+          </span>
+        </p>
         <h1>{profile.headline_1}<br /><em>{profile.headline_2}</em></h1>
         <p class="lede">{profile.lede}</p>
         <div class="hero-actions">
@@ -131,22 +145,32 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
     </div>
   </section>
 
-  <section class="section wrap" id="writing">
+  <section class="section wrap" id="credentials">
     <div class="sec-head">
       <div>
-        <p class="mono sec-label">{s.writing_label}</p>
-        <h2 class="sec-title">{s.writing_title}</h2>
+        <p class="mono sec-label">{c.label}</p>
+        <h2 class="sec-title">{c.title}</h2>
+        <p class="cred-lede">{c.lede}</p>
       </div>
-      <a class="mono link-inline" href="/blog">All posts ↗</a>
+      {resumeUrl && <a class="mono link-inline" href={resumeUrl} download>Full résumé ↓</a>}
     </div>
 
-    <div class="write-list">
-      {posts.map((post) => (
-        <a class="write-item" href={`/blog/${post.slug}`}>
-          <span class="mono write-date">{formatMonth(post.data.date)}</span>
-          <h3>{post.data.title}</h3>
-          <span class="write-arrow" aria-hidden="true">→</span>
-        </a>
+    <div class="cred-grid">
+      {c.groups.map((group) => (
+        <div class="cred-group">
+          <p class="mono cred-group-label">{group.label}</p>
+          <ul class="cred-list">
+            {group.items.map((item) => (
+              <li class="cred-item">
+                <span class="cred-mark" aria-hidden="true"></span>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p class="mono">{item.meta}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       ))}
     </div>
   </section>
@@ -176,6 +200,26 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
           ))}
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="writing">
+    <div class="sec-head">
+      <div>
+        <p class="mono sec-label">{s.writing_label}</p>
+        <h2 class="sec-title">{s.writing_title}</h2>
+      </div>
+      <a class="mono link-inline" href="/blog">All posts ↗</a>
+    </div>
+
+    <div class="write-list">
+      {posts.map((post) => (
+        <a class="write-item" href={`/blog/${post.slug}`}>
+          <span class="mono write-date">{formatMonth(post.data.date)}</span>
+          <h3>{post.data.title}</h3>
+          <span class="write-arrow" aria-hidden="true">→</span>
+        </a>
+      ))}
     </div>
   </section>
 

@@ -1,0 +1,56 @@
+{
+  "certifications": {
+    "label": "03 — Certifications, achievements & participation",
+    "title": "Proof, not promises.",
+    "lede": "Certificates I've earned, work that got noticed, and the rooms I've shown up in.",
+    "groups": [
+      {
+        "label": "Certifications",
+        "items": [
+          {
+            "title": "AWS Certified Cloud Practitioner",
+            "meta": "AWS · CLF-C02"
+          },
+          {
+            "title": "Node.js — The Complete Guide",
+            "meta": "Udemy"
+          },
+          {
+            "title": "Git and GitHub",
+            "meta": "Udemy"
+          },
+          {
+            "title": "Microservices in Golang",
+            "meta": "Udemy"
+          }
+        ]
+      },
+      {
+        "label": "Achievements",
+        "items": [
+          {
+            "title": "3× Spot Awards",
+            "meta": "Invenco by GVR · Back-to-back recognition"
+          },
+          {
+            "title": "1st place, Byte Battle Hackathon",
+            "meta": "Mentor & team lead · Nov 2024"
+          }
+        ]
+      },
+      {
+        "label": "Participation",
+        "items": [
+          {
+            "title": "Smart India Hackathon",
+            "meta": "Jan 2023 · Team ID 1637"
+          },
+          {
+            "title": "CP Hackathon, NHCE",
+            "meta": "Mar 2023"
+          }
+        ]
+      }
+    ]
+  }
+}
