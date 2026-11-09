@@ -66,6 +66,9 @@ const nav = [
       content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'}
     />
     <meta name="author" content={profile.name} />
+    {profile.google_site_verification && (
+      <meta name="google-site-verification" content={profile.google_site_verification} />
+    )}
     <link rel="canonical" href={canonicalUrl} />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link
