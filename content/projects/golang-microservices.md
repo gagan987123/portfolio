@@ -1,13 +1,15 @@
 ---
 title: Golang Microservices
-description: Five services on gRPC + RabbitMQ with Docker Compose, Postgres/MongoDB, and centralized auth.
+description: Five services on gRPC + RabbitMQ with Docker Compose,
+  Postgres/MongoDB, and centralized auth.
 tags:
   - Golang
   - gRPC
   - Docker
 link: https://github.com/gagan987123
 image: ""
-order: 2
+cover: text
+order: 4
 ---
 
 A small distributed system built to explore service boundaries and messaging.

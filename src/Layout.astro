@@ -4,6 +4,17 @@ import { getProfile, mediaUrl } from './lib/content.js';
 
 const profile = getProfile();
 const resumeUrl = mediaUrl(profile.resume);
+const theme = profile.theme || {};
+const safeHex = (value) => (/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(value || '') ? value : null);
+const themeStyle = [
+  ['--cream', safeHex(theme.cream)],
+  ['--ink', safeHex(theme.ink)],
+  ['--orange', safeHex(theme.orange)],
+]
+  .filter(([, value]) => value)
+  .map(([name, value]) => `${name}:${value};`)
+  .join(' ');
+const themeColor = safeHex(theme.cream) || '#f3eee3';
 const { title, description, ogImage } = Astro.props;
 const pageTitle = title || profile.seo.title;
 const pageDescription = description || profile.seo.description;
@@ -20,13 +31,13 @@ const nav = [
 ---
 
 <!doctype html>
-<html lang="en" id="top">
+<html lang="en" id="top" style={themeStyle}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{pageTitle}</title>
     <meta name="description" content={pageDescription} />
-    <meta name="theme-color" content="#f3eee3" />
+    <meta name="theme-color" content={themeColor} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
     <meta property="og:type" content="website" />

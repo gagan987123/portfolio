@@ -1,18 +1,22 @@
 ---
 title: Autodoc — AI Documentation Platform
-description: AST parsing, call graphs, and RAG chat with auto Git-push; supports JS/TS/Java/Python with PDF extraction.
+description: AI docs from real code — AST parsing, call graphs, RAG chat, PDF
+  ingestion, and automatic Git pushes.
 tags:
   - Node.js
   - React
   - RAG
-link: https://github.com/gagan987123
+  - AST
+link: https://github.com/gagan987123/Autodoc
 image: ""
-order: 1
+cover: text
+order: 2
 ---
 
 Autodoc turns a codebase into living documentation. It parses source with
-language-aware AST tooling, builds call graphs, and answers questions through a
-retrieval-augmented chat interface.
+language-aware AST tooling for JavaScript/TypeScript, Java, and Python, builds
+call graphs, and ingests PDFs so answers are grounded in both code and docs.
 
-It supports JavaScript/TypeScript, Java, and Python sources, plus PDF ingestion,
-and can push generated docs back to a Git repository automatically.
+A retrieval-augmented chat lets you ask how the system works and get answers
+tied to real symbols and files. Generated documentation can be pushed back to
+Git automatically, keeping docs in sync as the code changes.

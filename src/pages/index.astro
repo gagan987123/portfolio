@@ -120,11 +120,19 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
     <div class="work-grid">
       {projects.map((project, index) => {
         const image = mediaUrl(project.data.image);
+        const coverMode = project.data.cover || (image ? 'image' : 'text');
+        const useTextCover = coverMode === 'text' || !image;
         return (
           <article class="project">
-            <figure class="frame frame-wide">
-              {image && <img src={image} alt={project.data.title} onerror="this.remove()" />}
-              <figcaption class="ph-label">Project image</figcaption>
+            <figure class={`frame frame-wide${useTextCover ? ' project-cover-text' : ''}`}>
+              {useTextCover ? (
+                <figcaption class="cover-text">
+                  <span class="mono cover-kicker">Project {String(index + 1).padStart(2, '0')}</span>
+                  <span class="cover-title">{project.data.cover_text || project.data.title}</span>
+                </figcaption>
+              ) : (
+                <img src={image} alt={project.data.title} onerror="this.remove()" />
+              )}
             </figure>
             <div class="project-body">
               <p class="mono project-num">{String(index + 1).padStart(2, '0')}</p>
@@ -177,7 +185,7 @@ const socials = (profile.contact.socials || []).filter((item) => item.url);
 
   <section class="section wrap" id="about">
     <div class="about-grid">
-      <div class="reveal">
+      <div class="portrait reveal">
         <figure class="frame frame-tall">
           {aboutPhoto && <img src={aboutPhoto} alt={profile.name} onerror="this.remove()" />}
           <figcaption class="ph-label">Photo · 4:5</figcaption>

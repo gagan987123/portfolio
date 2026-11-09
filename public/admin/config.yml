@@ -49,6 +49,18 @@ collections:
               - { name: writing_title, label: Writing title, widget: string }
               - { name: contact_label, label: Contact label, widget: string }
 
+      - name: theme
+        label: Theme colors
+        file: content/site/theme.json
+        fields:
+          - label: Theme colors
+            name: theme
+            widget: object
+            fields:
+              - { name: cream, label: Cream / background, widget: color, default: "#f3eee3" }
+              - { name: ink, label: Ink / text, widget: color, default: "#111111" }
+              - { name: orange, label: Orange / accent, widget: color, default: "#d9541e" }
+
       - name: hero
         label: Hero
         file: content/site/hero.json
@@ -193,5 +205,14 @@ collections:
         field: { name: tag, label: Tag, widget: string }
       - { name: link, label: Project link, widget: string, required: false }
       - { name: image, label: Project image, widget: image, required: false }
+      - name: cover
+        label: Cover type
+        widget: select
+        required: false
+        default: image
+        options:
+          - { label: Image, value: image }
+          - { label: Text, value: text }
+      - { name: cover_text, label: Cover text, widget: string, required: false, hint: "Shown when the cover is text. Defaults to the project title." }
       - { name: order, label: Order, widget: number, default: 1, value_type: int }
       - { name: body, label: Details (optional), widget: markdown, required: false }

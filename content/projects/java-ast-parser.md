@@ -1,11 +1,13 @@
 ---
 title: Java AST Parser (NPM)
-description: Published an NPM package that parses Java source into ASTs using a custom-built lexer.
+description: Published an NPM package that parses Java source into ASTs using a
+  custom-built lexer.
 tags:
   - Node.js
   - NPM
-link: https://github.com/gagan987123
+link: https://www.npmjs.com/package/java-ast-parser
 image: ""
+cover: text
 order: 3
 ---
 
