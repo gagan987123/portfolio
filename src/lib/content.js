@@ -44,6 +44,42 @@ export function getPost(slug) {
   return getPosts().find((post) => post.slug === slug);
 }
 
+export function categorySlug(value) {
+  return (
+    String(value || '')
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase()
+      .replace(/&/g, ' and ')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'uncategorized'
+  );
+}
+
+export function getCategories() {
+  const categories = new Map();
+  for (const post of getPosts()) {
+    const name = String(post.data.category || 'Uncategorized').trim() || 'Uncategorized';
+    const slug = categorySlug(name);
+    const date = new Date(post.data.date);
+    const latest = Number.isNaN(date.getTime()) ? null : date;
+    const existing = categories.get(slug);
+    if (existing) {
+      existing.count += 1;
+      if (latest && (!existing.latest || latest > existing.latest)) existing.latest = latest;
+    } else {
+      categories.set(slug, { name, slug, count: 1, latest });
+    }
+  }
+  return [...categories.values()].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+export function getPostsByCategory(slug) {
+  return getPosts().filter(
+    (post) => categorySlug(post.data.category || 'Uncategorized') === slug,
+  );
+}
+
 export function getProjects() {
   return readCollection('projects').sort(
     (a, b) => (Number(a.data.order) || 999) - (Number(b.data.order) || 999)

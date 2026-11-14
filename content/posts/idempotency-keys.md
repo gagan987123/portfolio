@@ -2,6 +2,7 @@
 title: Idempotency keys, explained with coffee
 date: 2026-09-28
 excerpt: Why retrying a payment should never charge twice — and how to design the API so it can't.
+category: Backend
 tags:
   - APIs
   - Reliability

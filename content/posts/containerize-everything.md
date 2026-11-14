@@ -2,6 +2,7 @@
 title: Why I containerize everything, even static sites
 date: 2026-07-02
 excerpt: Reproducible builds, painless rollbacks, and one mental model for every deploy.
+category: DevOps
 tags:
   - Docker
   - DevOps

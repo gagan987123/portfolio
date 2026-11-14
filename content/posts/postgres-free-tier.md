@@ -2,6 +2,7 @@
 title: "Running Postgres on a free-tier VM: what I learned"
 date: 2026-08-15
 excerpt: Backups, connections, and the settings that matter when you're the only DBA.
+category: Databases
 tags:
   - PostgreSQL
   - Self-hosting

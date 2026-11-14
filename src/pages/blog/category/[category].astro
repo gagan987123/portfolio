@@ -1,0 +1,90 @@
+---
+import Layout from '../../../Layout.astro';
+import {
+  getCategories,
+  getProfile,
+  getPostsByCategory,
+  formatDate,
+} from '../../../lib/content.js';
+
+export function getStaticPaths() {
+  return getCategories().map((category) => ({
+    params: { category: category.slug },
+    props: { category },
+  }));
+}
+
+const { category } = Astro.props;
+const profile = getProfile();
+const categories = getCategories();
+const posts = getPostsByCategory(category.slug);
+const siteUrl = (profile.site_url || '').replace(/\/+$/, '');
+const categoryUrl = `${siteUrl}/blog/category/${category.slug}`;
+const description = `Posts about ${category.name.toLowerCase()} by ${profile.name}.`;
+const collection = {
+  '@type': 'CollectionPage',
+  '@id': `${categoryUrl}#collection`,
+  url: categoryUrl,
+  name: `${category.name} — Writing — ${profile.name}`,
+  description,
+  inLanguage: 'en',
+  isPartOf: {
+    '@type': 'Blog',
+    '@id': `${siteUrl}/blog#blog`,
+    name: `Writing — ${profile.name}`,
+    url: `${siteUrl}/blog`,
+  },
+  mainEntity: {
+    '@type': 'ItemList',
+    numberOfItems: posts.length,
+    itemListElement: posts.map((post, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: post.data.title,
+      url: `${siteUrl}/blog/${post.slug}`,
+    })),
+  },
+};
+---
+
+<Layout
+  title={`${category.name} — Writing — ${profile.name}`}
+  description={description}
+  jsonLd={[collection]}
+>
+  <header class="page-head wrap">
+    <p class="mono sec-label">Writing / Category</p>
+    <h1>{category.name}</h1>
+    <p class="page-lede">
+      {posts.length} {posts.length === 1 ? 'post' : 'posts'} on {category.name.toLowerCase()}.
+      <a class="link-inline" href="/blog">All posts →</a>
+    </p>
+  </header>
+
+  <nav class="wrap category-nav" aria-label="Blog categories">
+    <a class="category-pill" href="/blog">All</a>
+    {categories.map((item) => (
+      <a
+        class:list={['category-pill', { 'is-active': item.slug === category.slug }]}
+        href={`/blog/category/${item.slug}`}
+        aria-current={item.slug === category.slug ? 'page' : undefined}
+      >
+        {item.name} <span class="category-count">{item.count}</span>
+      </a>
+    ))}
+  </nav>
+
+  <section class="wrap" style="padding-bottom: 100px">
+    <div class="post-grid">
+      {posts.map((post) => (
+        <a class="post-card" href={`/blog/${post.slug}`}>
+          <div class="post-meta mono">
+            <span>{formatDate(post.data.date)}</span>
+          </div>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.excerpt}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>

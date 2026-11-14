@@ -2,6 +2,7 @@
 title: Cutting my cloud bill with three boring changes
 date: 2026-10-12
 excerpt: No re-architecture, no Kubernetes migration — just lifecycle rules, right-sized instances, and deleting what nobody uses.
+category: Cloud
 tags:
   - AWS
   - Cost

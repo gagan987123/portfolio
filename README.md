@@ -59,7 +59,7 @@ Decap runs in **local mode**: saving writes directly to files on disk and does
 
 ### Adding posts / projects
 
-- **Posts:** title, date, excerpt, cover, tags, draft toggle, Markdown body.
+- **Posts:** title, date, excerpt, category, cover, tags, draft toggle, Markdown body. Typing a new category creates its blog category page automatically.
 - **Projects:** title, description, tags, link, image, order, optional details.
 - Uploads (images, résumé PDF) land in `public/uploads/` and are referenced as
   `/uploads/<file>`.
