@@ -21,7 +21,7 @@ export function GET() {
 
   const items = posts
     .map((post) => {
-      const url = `${site}/blog/${post.slug}`;
+      const url = `${site}/blog/${post.slug}/`;
       return `    <item>
       <title>${escapeXml(post.data.title)}</title>
       <link>${escapeXml(url)}</link>
@@ -39,7 +39,7 @@ ${(post.data.tags || [])
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(`Writing — ${profile.name}`)}</title>
-    <link>${escapeXml(`${site}/blog`)}</link>
+    <link>${escapeXml(`${site}/blog/`)}</link>
     <description>${escapeXml(description)}</description>
     <language>en</language>
     <lastBuildDate>${(posts[0] ? toDate(posts[0].data.date) : new Date()).toUTCString()}</lastBuildDate>

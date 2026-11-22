@@ -66,7 +66,7 @@ const website = {
           <a class="btn btn-primary" href={profile.primary_cta_href}>
             {profile.primary_cta_label} <span aria-hidden="true">→</span>
           </a>
-          <a class="btn btn-ghost" href="/blog">
+          <a class="btn btn-ghost" href="/blog/">
             Blog <span aria-hidden="true">→</span>
           </a>
           {resumeUrl && (
@@ -242,12 +242,12 @@ const website = {
         <p class="mono sec-label">{s.writing_label}</p>
         <h2 class="sec-title">{s.writing_title}</h2>
       </div>
-      <a class="mono link-inline" href="/blog">All posts ↗</a>
+      <a class="mono link-inline" href="/blog/">All posts ↗</a>
     </div>
 
     <div class="write-list">
       {posts.map((post) => (
-        <a class="write-item" href={`/blog/${post.slug}`}>
+        <a class="write-item" href={`/blog/${post.slug}/`}>
           <span class="mono write-date">{formatMonth(post.data.date)}</span>
           <h3>{post.data.title}</h3>
           <span class="write-arrow" aria-hidden="true">→</span>

@@ -10,9 +10,9 @@ const siteUrl = (profile.site_url || '').replace(/\/+$/, '');
 const description = 'Notes on backends, infrastructure, and running things in the cloud.';
 const blog = {
   '@type': 'Blog',
-  '@id': `${siteUrl}/blog#blog`,
+  '@id': `${siteUrl}/blog/#blog`,
   name: `Writing — ${profile.name}`,
-  url: `${siteUrl}/blog`,
+  url: `${siteUrl}/blog/`,
   description,
   inLanguage: 'en',
   publisher: {
@@ -23,10 +23,10 @@ const blog = {
   },
   blogPost: posts.map((post) => ({
     '@type': 'BlogPosting',
-    '@id': `${siteUrl}/blog/${post.slug}#article`,
+    '@id': `${siteUrl}/blog/${post.slug}/#article`,
     headline: post.data.title,
     description: post.data.excerpt,
-    url: `${siteUrl}/blog/${post.slug}`,
+    url: `${siteUrl}/blog/${post.slug}/`,
     datePublished: new Date(post.data.date).toISOString(),
     articleSection: post.data.category || 'Uncategorized',
     author: { '@id': `${siteUrl}/#person` },
@@ -47,9 +47,9 @@ const blog = {
 
   {categories.length > 0 && (
     <nav class="wrap category-nav" aria-label="Blog categories">
-      <a class="category-pill is-active" href="/blog" aria-current="page">All</a>
+      <a class="category-pill is-active" href="/blog/" aria-current="page">All</a>
       {categories.map((category) => (
-        <a class="category-pill" href={`/blog/category/${category.slug}`}>
+        <a class="category-pill" href={`/blog/category/${category.slug}/`}>
           {category.name} <span class="category-count">{category.count}</span>
         </a>
       ))}
@@ -58,7 +58,7 @@ const blog = {
 
   <section class="wrap" style="padding-bottom: 100px">
     {featured && (
-      <a class="featured" href={`/blog/${featured.slug}`}>
+      <a class="featured" href={`/blog/${featured.slug}/`}>
         <div class="post-meta mono">
           <span>Latest</span>
           <span>{featured.data.category || 'Uncategorized'}</span>
@@ -73,7 +73,7 @@ const blog = {
     {rest.length > 0 && (
       <div class="post-grid">
         {rest.map((post) => (
-          <a class="post-card" href={`/blog/${post.slug}`}>
+          <a class="post-card" href={`/blog/${post.slug}/`}>
             <div class="post-meta mono">
               <span>{post.data.category || 'Uncategorized'}</span>
               <span>{formatDate(post.data.date)}</span>

@@ -19,7 +19,7 @@ const profile = getProfile();
 const categories = getCategories();
 const posts = getPostsByCategory(category.slug);
 const siteUrl = (profile.site_url || '').replace(/\/+$/, '');
-const categoryUrl = `${siteUrl}/blog/category/${category.slug}`;
+const categoryUrl = `${siteUrl}/blog/category/${category.slug}/`;
 const description = `Posts about ${category.name.toLowerCase()} by ${profile.name}.`;
 const collection = {
   '@type': 'CollectionPage',
@@ -30,9 +30,9 @@ const collection = {
   inLanguage: 'en',
   isPartOf: {
     '@type': 'Blog',
-    '@id': `${siteUrl}/blog#blog`,
+    '@id': `${siteUrl}/blog/#blog`,
     name: `Writing — ${profile.name}`,
-    url: `${siteUrl}/blog`,
+    url: `${siteUrl}/blog/`,
   },
   mainEntity: {
     '@type': 'ItemList',
@@ -41,7 +41,7 @@ const collection = {
       '@type': 'ListItem',
       position: index + 1,
       name: post.data.title,
-      url: `${siteUrl}/blog/${post.slug}`,
+      url: `${siteUrl}/blog/${post.slug}/`,
     })),
   },
 };
@@ -57,16 +57,16 @@ const collection = {
     <h1>{category.name}</h1>
     <p class="page-lede">
       {posts.length} {posts.length === 1 ? 'post' : 'posts'} on {category.name.toLowerCase()}.
-      <a class="link-inline" href="/blog">All posts →</a>
+      <a class="link-inline" href="/blog/">All posts →</a>
     </p>
   </header>
 
   <nav class="wrap category-nav" aria-label="Blog categories">
-    <a class="category-pill" href="/blog">All</a>
+    <a class="category-pill" href="/blog/">All</a>
     {categories.map((item) => (
       <a
         class:list={['category-pill', { 'is-active': item.slug === category.slug }]}
-        href={`/blog/category/${item.slug}`}
+        href={`/blog/category/${item.slug}/`}
         aria-current={item.slug === category.slug ? 'page' : undefined}
       >
         {item.name} <span class="category-count">{item.count}</span>
@@ -77,7 +77,7 @@ const collection = {
   <section class="wrap" style="padding-bottom: 100px">
     <div class="post-grid">
       {posts.map((post) => (
-        <a class="post-card" href={`/blog/${post.slug}`}>
+        <a class="post-card" href={`/blog/${post.slug}/`}>
           <div class="post-meta mono">
             <span>{formatDate(post.data.date)}</span>
           </div>

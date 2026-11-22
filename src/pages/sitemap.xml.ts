@@ -24,15 +24,15 @@ export function GET() {
 
   const urls = [
     { loc: `${site}/`, lastmod: latest, changefreq: 'monthly', priority: '1.0' },
-    { loc: `${site}/blog`, lastmod: latest, changefreq: 'weekly', priority: '0.8' },
+    { loc: `${site}/blog/`, lastmod: latest, changefreq: 'weekly', priority: '0.8' },
     ...categories.map((category) => ({
-      loc: `${site}/blog/category/${category.slug}`,
+      loc: `${site}/blog/category/${category.slug}/`,
       lastmod: category.latest ? isoDay(category.latest) : latest,
       changefreq: 'monthly',
       priority: '0.6',
     })),
     ...posts.map((post) => ({
-      loc: `${site}/blog/${post.slug}`,
+      loc: `${site}/blog/${post.slug}/`,
       lastmod: isoDay(post.data.date),
       changefreq: 'yearly',
       priority: '0.7',

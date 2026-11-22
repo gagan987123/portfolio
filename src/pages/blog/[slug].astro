@@ -27,9 +27,9 @@ const toIso = (value) => {
 };
 const publishedIso = toIso(post.data.date);
 const modifiedIso = toIso(post.data.updated || post.data.date);
-const postUrl = `${siteUrl}/blog/${post.slug}`;
+const postUrl = `${siteUrl}/blog/${post.slug}/`;
 const category = (post.data.category || 'Uncategorized').trim() || 'Uncategorized';
-const categoryUrl = `${siteUrl}/blog/category/${categorySlug(category)}`;
+const categoryUrl = `${siteUrl}/blog/category/${categorySlug(category)}/`;
 const coverUrl = cover ? new URL(cover, siteUrl).href : undefined;
 const author = {
   '@type': 'Person',
@@ -58,7 +58,7 @@ const breadcrumbs = {
   '@id': `${postUrl}#breadcrumb`,
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
-    { '@type': 'ListItem', position: 2, name: 'Writing', item: `${siteUrl}/blog` },
+    { '@type': 'ListItem', position: 2, name: 'Writing', item: `${siteUrl}/blog/` },
     { '@type': 'ListItem', position: 3, name: category, item: categoryUrl },
     { '@type': 'ListItem', position: 4, name: post.data.title, item: postUrl },
   ],
@@ -91,6 +91,6 @@ const breadcrumbs = {
 
     <div class="prose" set:html={html} />
 
-    <a class="mono link-inline back-link" href="/blog">← All posts</a>
+    <a class="mono link-inline back-link" href="/blog/">← All posts</a>
   </article>
 </Layout>
